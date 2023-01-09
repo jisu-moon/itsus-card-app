@@ -39,8 +39,9 @@ const cardsSlice = createSlice({
         '': '',
       };
     },
-    removeInput(state, action: IUpdateAction) {
+    removeInput(state: { cards: any }, action: IUpdateAction) {
       const [index1, index2] = action.payload.index.split(',');
+      delete state.cards[index1][index2][action.payload.key];
     },
     updateKey(state: { cards: any }, action: IUpdateAction) {
       const [index1, index2] = action.payload.index.split(',');

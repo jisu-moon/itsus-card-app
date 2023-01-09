@@ -9,8 +9,8 @@ const Card = ({ card, id }: any) => {
   const addInputHandler = () => {
     dispatch(cardsActions.addInput(id));
   };
-  const removeInputHandler = (id: string, key: string) => {
-    // dispatch(cardsActions.removeInput());
+  const removeInputHandler = (index: string, key: string) => {
+    dispatch(cardsActions.removeInput({ index, key }));
   };
   const keyBlurHandler =
     (index: string, key: string) =>
