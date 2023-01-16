@@ -52,6 +52,9 @@ const cardsSlice = createSlice({
       );
       state.cards[index1] = filterCards;
     },
+    addCard(state: { cards: any }, action) {
+      state.cards[action.payload].push({});
+    },
   },
   extraReducers(builder) {
     builder.addCase(getCardsData.pending, (state, action) => {

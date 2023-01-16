@@ -16,6 +16,10 @@ const CardsList = ({ title, cards }: IProps) => {
     dispatch(cardsActions.removeCard(index));
   };
 
+  const addCardHandler = (title: string) => {
+    dispatch(cardsActions.addCard(title));
+  };
+
   if (isArray) {
     return (
       <S.CardsWrapper className='cards-wrapper'>
@@ -34,7 +38,9 @@ const CardsList = ({ title, cards }: IProps) => {
             </div>
           );
         })}
-        <button className='opacity-btn'>+</button>
+        <button className='opacity-btn' onClick={() => addCardHandler(title)}>
+          +
+        </button>
       </S.CardsWrapper>
     );
   } else {
