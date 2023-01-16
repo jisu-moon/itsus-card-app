@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCardsData } from './cards-actions';
+import axios from 'axios';
+import { getCardsData } from './cards-actions';
 
 export interface ICards {
   [key: string]: {
@@ -18,7 +19,7 @@ interface IUpdateAction {
   payload: {
     value?: string;
     index: string;
-    key: string;
+    option: string;
     prevValue?: string;
   };
 }
@@ -32,43 +33,38 @@ const cardsSlice = createSlice({
   name: 'cards',
   initialState,
   reducers: {
-    addInput(state: { cards: any }, action: { payload: string }) {
-      const [index1, index2] = action.payload.split(',');
-      state.cards[index1][index2] = {
-        ...state.cards[index1][index2],
-        '': '',
-      };
-    },
-    removeInput(state: { cards: any }, action: IUpdateAction) {
-      const [index1, index2] = action.payload.index.split(',');
-      delete state.cards[index1][index2][action.payload.key];
-    },
-    updateKey(state: { cards: any }, action: IUpdateAction) {
-      const [index1, index2] = action.payload.index.split(',');
-      state.cards[index1][index2] = {
-        ...state.cards[index1][index2],
-        [action.payload.value!]:
-          state.cards[index1][index2][action.payload.key],
-      };
-      delete state.cards[index1][index2][action.payload.prevValue!];
-    },
     updateValue(state: { cards: any }, action: IUpdateAction) {
       const [index1, index2] = action.payload.index.split(',');
-      state.cards[index1][index2][action.payload.key] = action.payload.value;
+      state.cards[index1][index2][action.payload.option] = action.payload.value;
+    },
+    saveCards(state, action) {
+      axios.put(
+        'https://test-42217-default-rtdb.asia-southeast1.firebasedatabase.app/cardData.json',
+        state.cards,
+      );
+    },
+    removeCard(state: { cards: any }, action: { payload: string }) {
+      const [index1, index2] = action.payload.split(',');
+      const filterCards = state.cards[index1].filter(
+        (card: ICards, index: number) => {
+          return index !== Number(index2);
+        },
+      );
+      state.cards[index1] = filterCards;
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchCardsData.pending, (state, action) => {
+    builder.addCase(getCardsData.pending, (state, action) => {
       state.status = 'pending';
     });
     builder.addCase(
-      fetchCardsData.fulfilled,
+      getCardsData.fulfilled,
       (state, action: PayloadAction<ICards>) => {
         state.status = 'complete';
         state.cards = action.payload;
       },
     );
-    builder.addCase(fetchCardsData.rejected, (state, action) => {
+    builder.addCase(getCardsData.rejected, (state, action) => {
       state.status = 'error';
     });
   },

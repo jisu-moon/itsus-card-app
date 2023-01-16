@@ -1,62 +1,24 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { cardsActions } from '../store/cards-slice';
+import { ICards } from '../store/cards-slice';
 import * as S from './Card.styled';
+import CardTextarea from './CardTextarea';
 
-const Card = ({ card, id }: any) => {
-  const dispatch = useDispatch();
+interface IProps {
+  index: string;
+  card: ICards | any;
+}
 
-  const addInputHandler = () => {
-    dispatch(cardsActions.addInput(id));
-  };
-  const removeInputHandler = (index: string, key: string) => {
-    dispatch(cardsActions.removeInput({ index, key }));
-  };
-  const keyBlurHandler =
-    (index: string, key: string) =>
-    (event: React.FocusEvent<HTMLInputElement>) => {
-      dispatch(
-        cardsActions.updateKey({
-          value: event.currentTarget.value,
-          index,
-          key,
-          prevValue: event.currentTarget.defaultValue,
-        }),
-      );
-    };
-  const valueBlurHandler =
-    (index: string, key: string) =>
-    (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      dispatch(
-        cardsActions.updateValue({
-          value: event.currentTarget.value,
-          index,
-          key,
-        }),
-      );
-    };
-  const keys = Object.keys(card);
+const cardOptions = ['title', 'summary', 'subSummary', 'price'];
+
+const Card = ({ card, index }: IProps) => {
   return (
     <S.CardWrapper>
-      {keys.map((key, index) => {
+      {cardOptions.map((option: string) => {
         return (
-          <S.Card key={`${id},${index}`}>
-            <input
-              type='text'
-              defaultValue={key}
-              onBlur={keyBlurHandler(id, key)}
-            />
-            <textarea
-              defaultValue={card[key]}
-              onBlur={valueBlurHandler(id, key)}
-            />
-            <button onClick={() => removeInputHandler(id, key)}>-</button>
+          <S.Card key={`${index},${option}`}>
+            <CardTextarea value={card[option]} option={option} index={index} />
           </S.Card>
         );
       })}
-      <div className='btn-wrapper'>
-        <button onClick={addInputHandler}>+</button>
-      </div>
     </S.CardWrapper>
   );
 };

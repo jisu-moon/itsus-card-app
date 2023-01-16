@@ -8,12 +8,29 @@ body {
 }
 section {
   padding: 30px;
-  background: #f1f1f1;
   display: flex;
   gap: 20px;
 }
 section > div {
   flex: 1 1 50%;
+}
+button {
+  cursor: pointer;
+  font-size: 24px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.opacity-btn {
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: 100%;
+  border: 0;
+  padding: 5px 10px;
+  background: gray;
+  color: #fff;
+}
+.cards-wrapper:hover .opacity-btn {
+  opacity: 1;
 }
 .cented {
   margin: 3rem auto;

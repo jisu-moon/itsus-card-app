@@ -23,4 +23,5 @@ export const CardWrapper = styled.div`
 export const Card = styled.div`
   flex: 1 1 30%;
   display: flex;
+  justify-content: space-between;
 `;
