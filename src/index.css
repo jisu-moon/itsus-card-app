@@ -11,8 +11,11 @@ section {
   display: flex;
   gap: 20px;
 }
+section > div:first-child {
+  flex: 1 1 70%;
+}
 section > div {
-  flex: 1 1 50%;
+  flex: 1 1 30%;
 }
 button {
   cursor: pointer;
@@ -23,7 +26,6 @@ button {
 .opacity-btn {
   opacity: 0;
   transition: opacity 0.3s;
-  width: 100%;
   border: 0;
   padding: 5px 10px;
   background: gray;

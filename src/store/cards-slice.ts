@@ -38,10 +38,7 @@ const cardsSlice = createSlice({
       state.cards[index1][index2][action.payload.option] = action.payload.value;
     },
     saveCards(state, action) {
-      axios.put(
-        'https://test-42217-default-rtdb.asia-southeast1.firebasedatabase.app/cardData.json',
-        state.cards,
-      );
+      axios.put(process.env.REACT_APP_CARDS_URL!, state.cards);
     },
     removeCard(state: { cards: any }, action: { payload: string }) {
       const [index1, index2] = action.payload.split(',');

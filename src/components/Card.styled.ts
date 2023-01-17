@@ -7,17 +7,9 @@ export const CardWrapper = styled.div`
   margin-bottom: 20px;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
   max-width: 900px;
-  .btn-wrapper {
-    button {
-      width: 100%;
-      border: 0;
-      background: #fff;
-      padding: 5px;
-      font-size: 18px;
-    }
-  }
+  flex: 0 0 80%;
+  gap: 10px;
 `;
 
 export const Card = styled.div`
